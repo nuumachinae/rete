@@ -1,64 +1,55 @@
 //////////////////////////////////////////////////////////////////////////
 /// Copyright (c) 1988-2023 $organization$
 ///
-/// This software is provided by the author and contributors ``as is''
-/// and any express or implied warranties, including, but not limited to,
-/// the implied warranties of merchantability and fitness for a particular
-/// purpose are disclaimed. In no event shall the author or contributors
-/// be liable for any direct, indirect, incidental, special, exemplary,
-/// or consequential damages (including, but not limited to, procurement
-/// of substitute goods or services; loss of use, data, or profits; or
-/// business interruption) however caused and on any theory of liability,
-/// whether in contract, strict liability, or tort (including negligence
-/// or otherwise) arising in any way out of the use of this software,
+/// This software is provided by the author and contributors ``as is'' 
+/// and any express or implied warranties, including, but not limited to, 
+/// the implied warranties of merchantability and fitness for a particular 
+/// purpose are disclaimed. In no event shall the author or contributors 
+/// be liable for any direct, indirect, incidental, special, exemplary, 
+/// or consequential damages (including, but not limited to, procurement 
+/// of substitute goods or services; loss of use, data, or profits; or 
+/// business interruption) however caused and on any theory of liability, 
+/// whether in contract, strict liability, or tort (including negligence 
+/// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
 ///   File: main_opt.hpp
 ///
 /// Author: $author$
-///   Date: 6/21/2023, 9/3/2023
+///   Date: 9/6/2023
 //////////////////////////////////////////////////////////////////////////
-#ifndef XOS_APP_CONSOLE_FRAMEWORK_VERSION_MAIN_OPT_HPP
-#define XOS_APP_CONSOLE_FRAMEWORK_VERSION_MAIN_OPT_HPP
+#ifndef XOS_APP_CONSOLE_NETWORK_SERVER_MAIN_OPT_HPP
+#define XOS_APP_CONSOLE_NETWORK_SERVER_MAIN_OPT_HPP
 
-#include "xos/app/console/rete/version/main.hpp"
-
-///////////////////////////////////////////////////////////////////////
-#define XOS_APP_CONSOLE_FRAMEWORK_VERSION_MAIN_OPTIONS_CHARS_EXTEND \
-
-#define XOS_APP_CONSOLE_FRAMEWORK_VERSION_MAIN_OPTIONS_OPTIONS_EXTEND \
+#include "xos/app/console/network/base/main.hpp"
 
 ///////////////////////////////////////////////////////////////////////
-#define XOS_APP_CONSOLE_FRAMEWORK_VERSION_MAIN_USAGE_OPTIONS_CHARS \
-   XOS_APP_CONSOLE_FRAMEWORK_VERSION_MAIN_OPTIONS_CHARS_EXTEND \
-   XOS_APP_CONSOLE_VERSION_MAIN_USAGE_OPTIONS_CHARS \
+#define XOS_APP_CONSOLE_NETWORK_SERVER_MAIN_OPTIONS_CHARS_EXTEND \
 
-#define XOS_APP_CONSOLE_FRAMEWORK_VERSION_MAIN_USAGE_OPTIONS_OPTIONS \
-   XOS_APP_CONSOLE_FRAMEWORK_VERSION_MAIN_OPTIONS_OPTIONS_EXTEND \
-   XOS_APP_CONSOLE_VERSION_MAIN_USAGE_OPTIONS_OPTIONS \
+#define XOS_APP_CONSOLE_NETWORK_SERVER_MAIN_OPTIONS_OPTIONS_EXTEND \
 
 ///////////////////////////////////////////////////////////////////////
-#define XOS_APP_CONSOLE_FRAMEWORK_VERSION_MAIN_OPTIONS_CHARS \
-   XOS_APP_CONSOLE_FRAMEWORK_VERSION_MAIN_OPTIONS_CHARS_EXTEND \
-   XOS_APP_CONSOLE_VERSION_MAIN_USAGE_OPTIONS_CHARS \
+#define XOS_APP_CONSOLE_NETWORK_SERVER_MAIN_OPTIONS_CHARS \
+   XOS_APP_CONSOLE_NETWORK_SERVER_MAIN_OPTIONS_CHARS_EXTEND \
+   XOS_APP_CONSOLE_NETWORK_BASE_MAIN_RECEIVE_OPTIONS_CHARS \
 
-#define XOS_APP_CONSOLE_FRAMEWORK_VERSION_MAIN_OPTIONS_OPTIONS \
-   XOS_APP_CONSOLE_FRAMEWORK_VERSION_MAIN_OPTIONS_OPTIONS_EXTEND \
-   XOS_APP_CONSOLE_VERSION_MAIN_USAGE_OPTIONS_OPTIONS \
+#define XOS_APP_CONSOLE_NETWORK_SERVER_MAIN_OPTIONS_OPTIONS \
+   XOS_APP_CONSOLE_NETWORK_SERVER_MAIN_OPTIONS_OPTIONS_EXTEND \
+   XOS_APP_CONSOLE_NETWORK_BASE_MAIN_RECEIVE_OPTIONS_OPTIONS \
 
 ///////////////////////////////////////////////////////////////////////
-#define XOS_APP_CONSOLE_FRAMEWORK_VERSION_MAIN_ARGS 0
-#define XOS_APP_CONSOLE_FRAMEWORK_VERSION_MAIN_ARGV 0,
+#define XOS_APP_CONSOLE_NETWORK_SERVER_MAIN_ARGS 0
+#define XOS_APP_CONSOLE_NETWORK_SERVER_MAIN_ARGV 0,
 
 namespace xos {
 namespace app {
 namespace console {
-namespace framework {
-namespace version {
+namespace network {
+namespace server {
 
 /// class main_optt
-template
-<class TExtends = xos::app::console::rete::version::maint<>,  class TImplements = typename TExtends::implements>
+template 
+<class TExtends = xos::app::console::network::base::maint<>,  class TImplements = typename TExtends::implements>
 
 class main_optt: virtual public TImplements, public TExtends {
 public:
@@ -112,7 +103,7 @@ protected:
         }
         return err;
     }
-
+    
     /// option_usage
     virtual const char_t* option_usage(const char_t*& optarg, const struct option* longopt) {
         const char_t* chars = "";
@@ -126,9 +117,9 @@ protected:
 
     /// options
     virtual const char_t* options(const struct option*& longopts) {
-        static const char_t* chars = XOS_APP_CONSOLE_FRAMEWORK_VERSION_MAIN_OPTIONS_CHARS;
+        static const char_t* chars = XOS_APP_CONSOLE_NETWORK_SERVER_MAIN_OPTIONS_CHARS;
         static struct option optstruct[]= {
-            XOS_APP_CONSOLE_FRAMEWORK_VERSION_MAIN_OPTIONS_OPTIONS
+            XOS_APP_CONSOLE_NETWORK_SERVER_MAIN_OPTIONS_OPTIONS
             {0, 0, 0, 0}};
         longopts = optstruct;
         return chars;
@@ -136,23 +127,22 @@ protected:
 
     /// arguments
     virtual const char_t* arguments(const char_t**& argv) {
-        static const char_t* _args = XOS_APP_CONSOLE_FRAMEWORK_VERSION_MAIN_ARGS;
+        static const char_t* _args = XOS_APP_CONSOLE_NETWORK_SERVER_MAIN_ARGS;
         static const char_t* _argv[] = {
-            XOS_APP_CONSOLE_FRAMEWORK_VERSION_MAIN_ARGV
+            XOS_APP_CONSOLE_NETWORK_SERVER_MAIN_ARGV
             0};
         argv = _argv;
         return _args;
     }
 
-
 protected:
-}; /// class main_optt
+}; /// class main_optt 
 typedef main_optt<> main_opt;
 
-} /// namespace version
-} /// namespace framework
-} /// namespace console
-} /// namespace app
-} /// namespace xos
+} /// namespace server 
+} /// namespace network 
+} /// namespace console 
+} /// namespace app 
+} /// namespace xos 
 
-#endif /// ndef XOS_APP_CONSOLE_FRAMEWORK_VERSION_MAIN_OPT_HPP
+#endif /// ndef XOS_APP_CONSOLE_NETWORK_SERVER_MAIN_OPT_HPP
