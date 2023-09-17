@@ -78,6 +78,32 @@
     XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_CONNECT_OPTARG_RESULT, \
     XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_CONNECT_OPTVAL_C}, \
 
+#define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_SEND_OPT "send"
+#define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_SEND_OPTARG_REQUIRED MAIN_OPT_ARGUMENT_OPTIONAL
+#define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_SEND_OPTARG_RESULT 0
+#define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_SEND_OPTARG XOS_APP_CONSOLE_NETWORK_SOCKETS_MAIN_CONNECT_HOST_OPTARG
+#define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_SEND_OPTUSE "send message"
+#define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_SEND_OPTVAL_S "s::"
+#define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_SEND_OPTVAL_C 's'
+#define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_SEND_OPTION \
+   {XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_SEND_OPT, \
+    XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_SEND_OPTARG_REQUIRED, \
+    XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_SEND_OPTARG_RESULT, \
+    XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_SEND_OPTVAL_C}, \
+
+#define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_RECEIVE_OPT "receive"
+#define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_RECEIVE_OPTARG_REQUIRED MAIN_OPT_ARGUMENT_OPTIONAL
+#define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_RECEIVE_OPTARG_RESULT 0
+#define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_RECEIVE_OPTARG XOS_APP_CONSOLE_NETWORK_SOCKETS_MAIN_ACCEPT_HOST_OPTARG
+#define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_RECEIVE_OPTUSE "receive messages"
+#define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_RECEIVE_OPTVAL_S "r::"
+#define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_RECEIVE_OPTVAL_C 'r'
+#define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_RECEIVE_OPTION \
+   {XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_RECEIVE_OPT, \
+    XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_RECEIVE_OPTARG_REQUIRED, \
+    XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_RECEIVE_OPTARG_RESULT, \
+    XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_RECEIVE_OPTVAL_C}, \
+
 #define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_HOST_OPT "host"
 #define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_HOST_OPTARG_REQUIRED MAIN_OPT_ARGUMENT_OPTIONAL
 #define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_HOST_OPTARG_RESULT 0
@@ -147,6 +173,20 @@
    XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_CONNECT_OPTION \
 
 ///////////////////////////////////////////////////////////////////////
+#define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_SEND_OPTIONS_CHARS_EXTEND \
+   XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_SEND_OPTVAL_S \
+
+#define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_SEND_OPTIONS_OPTIONS_EXTEND \
+   XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_SEND_OPTION \
+
+///////////////////////////////////////////////////////////////////////
+#define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_RECEIVE_OPTIONS_CHARS_EXTEND \
+   XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_RECEIVE_OPTVAL_S \
+
+#define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_RECEIVE_OPTIONS_OPTIONS_EXTEND \
+   XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_RECEIVE_OPTION \
+
+///////////////////////////////////////////////////////////////////////
 #define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_RELAY_OPTIONS_CHARS_EXTEND \
     XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_HOST_OPTVAL_S \
     XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_PORT_OPTVAL_S \
@@ -194,14 +234,18 @@
 #define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_OPTIONS_CHARS \
    XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_ACCEPT_OPTIONS_CHARS_EXTEND \
    XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_CONNECT_OPTIONS_CHARS_EXTEND \
-   XOS_APP_CONSOLE_NETWORK_BASE_MAIN_OPTIONS_CHARS_EXTEND \
+   XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_SEND_OPTIONS_CHARS_EXTEND \
+   XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_RECEIVE_OPTIONS_CHARS_EXTEND \
+   XOS_APP_CONSOLE_NETWORK_BASE_MAIN_MESSAGE_OPTIONS_CHARS_EXTEND \
    XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_RELAY_OPTIONS_CHARS_EXTEND \
    XOS_APP_CONSOLE_BASE_MAIN_OPTIONS_CHARS \
 
 #define XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_OPTIONS_OPTIONS \
    XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_ACCEPT_OPTIONS_OPTIONS_EXTEND \
    XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_CONNECT_OPTIONS_OPTIONS_EXTEND \
-   XOS_APP_CONSOLE_NETWORK_BASE_MAIN_OPTIONS_OPTIONS_EXTEND \
+   XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_SEND_OPTIONS_OPTIONS_EXTEND \
+   XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_RECEIVE_OPTIONS_OPTIONS_EXTEND \
+   XOS_APP_CONSOLE_NETWORK_BASE_MAIN_MESSAGE_OPTIONS_OPTIONS_EXTEND \
    XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_RELAY_OPTIONS_OPTIONS_EXTEND \
    XOS_APP_CONSOLE_BASE_MAIN_OPTIONS_OPTIONS \
 
@@ -571,6 +615,213 @@ protected:
     //////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////
 
+    /// ...send_run
+    int (derives::*send_run_)(int argc, char_t** argv, char_t** env);
+    virtual int send_run(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        if (send_run_) {
+            if (!(err = (this->*send_run_)(argc, argv, env))) {
+            } else {
+            }
+        } else {
+            if (!(err = default_send_run(argc, argv, env))) {
+            } else {
+            }
+        }
+        return err;
+    }
+    virtual int default_send_run(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        if (!(err = all_send(argc, argv, env))) {
+        } else {
+        }
+        return err;
+    }
+    virtual int before_send_run(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int after_send_run(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int all_send_run(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        if (!(err = before_send_run(argc, argv, env))) {
+            int err2 = 0;
+            err = send_run(argc, argv, env);
+            if ((err2 = after_send_run(argc, argv, env))) {
+                if (!(err)) err = err2;
+            }
+        }
+        return err;
+    }
+    virtual int set_send_run(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        if (!(err = set_sockets_run(argc, argv, env))) {
+            if (!(err = sockets_run_set(argc, argv, env))) {
+                sockets_run_ = &derives::all_send_run;
+            } else {
+            }
+        } else {
+        }
+        return err;
+    }
+    virtual int send_run_set(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int unset_send_run(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        sockets_run_ = 0;
+        if (!(err = unset_sockets_run(argc, argv, env))) {
+            if (!(err = sockets_run_unset(argc, argv, env))) {
+            } else {
+            }
+        } else {
+        }
+        return err;
+    }
+    virtual int send_run_unset(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+
+    /// ...receive_run
+    int (derives::*receive_run_)(int argc, char_t** argv, char_t** env);
+    virtual int receive_run(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        if (receive_run_) {
+            if (!(err = (this->*receive_run_)(argc, argv, env))) {
+            } else {
+            }
+        } else {
+            if (!(err = default_receive_run(argc, argv, env))) {
+            } else {
+            }
+        }
+        return err;
+    }
+    virtual int default_receive_run(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        bool accept_restart = false;
+        do {
+            LOGGER_IS_LOGGED_INFO("this->set_accept_done(false)...");
+            this->set_accept_done(false);
+
+            LOGGER_IS_LOGGED_INFO("!(err = all_accept(argc, argv, env))...");
+            if (!(err = all_receive(argc, argv, env))) {
+
+                LOGGER_IS_LOGGED_INFO("!(this->accept_one())...");
+                if (!(this->accept_one())) {
+                    LOGGER_IS_LOGGED_INFO("accept_restart = this->accept_restart()...");
+                    accept_restart = this->accept_restart();
+                } else {
+                    LOGGER_IS_LOGGED_INFO("...(this->accept_one())");
+                }
+                LOGGER_IS_LOGGED_INFO("this->set_accept_restart(false)...");
+                this->set_accept_restart(false);
+            } else {
+                LOGGER_IS_LOGGED_ERROR("...(" << err << " = all_accept(argc, argv, env))");
+            }
+        } while (accept_restart);
+        return err;
+    }
+    virtual int before_receive_run(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int after_receive_run(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int all_receive_run(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        if (!(err = before_receive_run(argc, argv, env))) {
+            int err2 = 0;
+            err = receive_run(argc, argv, env);
+            if ((err2 = after_receive_run(argc, argv, env))) {
+                if (!(err)) err = err2;
+            }
+        }
+        return err;
+    }
+    virtual int set_receive_run(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        if (!(err = set_sockets_run(argc, argv, env))) {
+            if (!(err = sockets_run_set(argc, argv, env))) {
+                sockets_run_ = &derives::all_receive_run;
+            } else {
+            }
+        } else {
+        }
+        return err;
+    }
+    virtual int receive_run_set(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int unset_receive_run(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        sockets_run_ = 0;
+        if (!(err = unset_sockets_run(argc, argv, env))) {
+            if (!(err = sockets_run_unset(argc, argv, env))) {
+            } else {
+            }
+        } else {
+        }
+        return err;
+    }
+    virtual int receive_run_unset(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int receive_one_receive_run(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        bool accepted_one = this->accept_one();
+        this->set_accept_one();
+        if (!(err = default_receive_run(argc, argv, env))) {
+        } else {
+        }
+        this->set_accept_one(accepted_one);
+        return err;
+    }
+    virtual int set_receive_one_run(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        if (!(err = set_sockets_run(argc, argv, env))) {
+            if (!(err = sockets_run_set(argc, argv, env))) {
+                receive_run_ = &derives::receive_one_receive_run;
+                sockets_run_ = &derives::all_receive_run;
+            } else {
+            }
+        } else {
+        }
+        return err;
+    }
+    virtual int receive_one_run_set(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int unset_receive_one_run(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        receive_run_ = 0;
+        sockets_run_ = 0;
+        if (!(err = unset_sockets_run(argc, argv, env))) {
+            if (!(err = sockets_run_unset(argc, argv, env))) {
+            } else {
+            }
+        } else {
+        }
+        return err;
+    }
+    virtual int receive_one_run_unset(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+
+    //////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
+
     /// ...output_host_run
     int (derives::*output_host_run_)(int argc, char_t** argv, char_t** env);
     virtual int output_host_run(int argc, char_t** argv, char_t** env) {
@@ -901,6 +1152,71 @@ protected:
     //////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////
 
+    ///
+    /// ...send
+    /// ...
+    /// ...send(int argc, ...)
+    virtual int send(int argc, char_t** argv, char_t**env) {
+        int err = 0;
+        return err;
+    }
+    virtual int before_send(int argc, char_t** argv, char** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int after_send(int argc, char_t** argv, char** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int all_send(int argc, char_t** argv, char** env) {
+        int err = 0;
+        if (!(err = before_send(argc, argv, env))) {
+            int err2 = 0;
+            err = send(argc, argv, env);
+            if ((err2 = after_send(argc, argv, env))) {
+                if (!(err)) err = err2;
+            }
+        }
+        return err;
+    }
+    /// ...
+    /// ...send
+    /// 
+
+    ///
+    /// ...receive
+    /// ...
+    /// ...receive(int argc, ...)
+    virtual int receive(int argc, char_t** argv, char_t**env) {
+        int err = 0;
+        return err;
+    }
+    virtual int before_receive(int argc, char_t** argv, char** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int after_receive(int argc, char_t** argv, char** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int all_receive(int argc, char_t** argv, char** env) {
+        int err = 0;
+        if (!(err = before_receive(argc, argv, env))) {
+            int err2 = 0;
+            err = receive(argc, argv, env);
+            if ((err2 = after_receive(argc, argv, env))) {
+                if (!(err)) err = err2;
+            }
+        }
+        return err;
+    }
+    /// ...
+    /// ...receive
+    /// 
+
+    //////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
+
     /// on...accept_one_option...
     virtual int on_get_accept_one_option
     (const char_t* optarg, int optind, int argc, char_t**argv, char_t**env) {
@@ -910,8 +1226,14 @@ protected:
     virtual int on_accept_one_option_get
     (const char_t* optarg, int optind, int argc, char_t**argv, char_t**env) {
         int err = 0;
-        if (!(err = set_accept_one_run(argc, argv, env))) {
-            if (!(err = accept_one_run_set(argc, argv, env))) {
+        if (!(err = set_receive_one_run(argc, argv, env))) {
+            if (!(err = receive_one_run_set(argc, argv, env))) {
+                if (!(err = set_accept_one_run(argc, argv, env))) {
+                    if (!(err = accept_one_run_set(argc, argv, env))) {
+                    } else {
+                    }
+                } else {
+                }
             } else {
             }
         } else {
@@ -1087,6 +1409,132 @@ protected:
     virtual const char_t* connect_option_usage(const char_t*& optarg, const struct option* longopt) {
         const char_t* chars = XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_CONNECT_OPTUSE;
         optarg = XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_CONNECT_OPTARG;
+        return chars;
+    }
+
+    /// on...send_option...
+    virtual int on_get_send_option
+    (const char_t* optarg, int optind, int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        return err;
+    }
+    virtual int on_send_option_get
+    (const char_t* optarg, int optind, int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        if (!(err = set_send_run(argc, argv, env))) {
+            if (!(err = send_run_set(argc, argv, env))) {
+            } else {
+            }
+        } else {
+        }
+        return err;
+    }
+    virtual int on_set_send_option
+    (const char_t* optarg, int optind, int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        if ((optarg) && (optarg[0])) {
+        } else {
+        }
+        return err;
+    }
+    virtual int on_send_option_set
+    (const char_t* optarg, int optind, int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        if (!(err = set_send_run(argc, argv, env))) {
+            if (!(err = send_run_set(argc, argv, env))) {
+            } else {
+            }
+        } else {
+        }
+        return err;
+    }
+    virtual int on_send_option
+    (int optval, const char_t* optarg, const char_t* optname,
+     int optind, int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        if ((optarg) && (optarg[0])) {
+            if (!(err = on_set_send_option(optarg, optind, argc, argv, env))) {
+                if (!(err = on_send_option_set(optarg, optind, argc, argv, env))) {
+                } else {
+                }
+            } else {
+            }
+        } else {
+            if (!(err = on_get_send_option(optarg, optind, argc, argv, env))) {
+                if (!(err = on_send_option_get(optarg, optind, argc, argv, env))) {
+                } else {
+                }
+            } else {
+            }
+        }
+        return err;
+    }
+    virtual const char_t* send_option_usage(const char_t*& optarg, const struct option* longopt) {
+        const char_t* chars = XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_SEND_OPTUSE;
+        optarg = XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_SEND_OPTARG;
+        return chars;
+    }
+
+    /// on...receive_option...
+    virtual int on_get_receive_option
+    (const char_t* optarg, int optind, int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        return err;
+    }
+    virtual int on_receive_option_get
+    (const char_t* optarg, int optind, int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        if (!(err = set_receive_run(argc, argv, env))) {
+            if (!(err = receive_run_set(argc, argv, env))) {
+            } else {
+            }
+        } else {
+        }
+        return err;
+    }
+    virtual int on_set_receive_option
+    (const char_t* optarg, int optind, int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        if ((optarg) && (optarg[0])) {
+        } else {
+        }
+        return err;
+    }
+    virtual int on_receive_option_set
+    (const char_t* optarg, int optind, int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        if (!(err = set_receive_run(argc, argv, env))) {
+            if (!(err = receive_run_set(argc, argv, env))) {
+            } else {
+            }
+        } else {
+        }
+        return err;
+    }
+    virtual int on_receive_option
+    (int optval, const char_t* optarg, const char_t* optname,
+     int optind, int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        if ((optarg) && (optarg[0])) {
+            if (!(err = on_set_receive_option(optarg, optind, argc, argv, env))) {
+                if (!(err = on_receive_option_set(optarg, optind, argc, argv, env))) {
+                } else {
+                }
+            } else {
+            }
+        } else {
+            if (!(err = on_get_receive_option(optarg, optind, argc, argv, env))) {
+                if (!(err = on_receive_option_get(optarg, optind, argc, argv, env))) {
+                } else {
+                }
+            } else {
+            }
+        }
+        return err;
+    }
+    virtual const char_t* receive_option_usage(const char_t*& optarg, const struct option* longopt) {
+        const char_t* chars = XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_RECEIVE_OPTUSE;
+        optarg = XOS_APP_CONSOLE_NETWORK_SOCKETS_BASE_MAIN_RECEIVE_OPTARG;
         return chars;
     }
 

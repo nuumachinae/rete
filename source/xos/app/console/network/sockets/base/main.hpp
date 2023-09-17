@@ -276,6 +276,142 @@ protected:
     //////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////
 
+    /// ...send(int argc, ...)
+    virtual int send(int argc, char_t** argv, char_t**env) {
+        int err = 0;
+        const xos::network::sockets::sockstring_t& host = this->connect_host();
+        const xos::network::sockets::sockport_t& port = this->connect_port();
+        xos::network::sockets::endpoint& ep = this->connect_ep();
+        xos::network::sockets::transport& tp = this->send_tp();
+        xos::network::sockets::interface &cn = this->connect_iface();
+
+        LOGGER_IS_LOGGED_INFO("ep.attach(host = \"" << host.chars() << "\", port = " << unsigned_to_string(port).chars() << ")...");
+        if (!(ep.attach(host, port))) {
+            LOGGER_IS_LOGGED_ERROR("...failed on ep.attach(host = \"" << host.chars() << "\", port = " << unsigned_to_string(port).chars() << ")...");
+        } else {
+            LOGGER_IS_LOGGED_INFO("...ep.attach(host = \"" << host.chars() << "\", port = " << unsigned_to_string(port).chars() << ")");
+
+            LOGGER_IS_LOGGED_INFO("cn.open(tp)...");
+            if (!(cn.open(tp))) {
+                LOGGER_IS_LOGGED_ERROR("...failed on ");
+            } else {
+                LOGGER_IS_LOGGED_INFO("...cn.open(tp)");
+                
+                if (!(err = all_send_to(ep, cn, argc, argv, env))) {
+                } else {
+                }
+                LOGGER_IS_LOGGED_INFO("cn.close()...");
+                cn.close();
+            }
+            LOGGER_IS_LOGGED_INFO("ep.detach()...");
+            ep.detach();
+        }
+        return err;
+    }
+
+    /// ...send_to(xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, ...)
+    virtual int send_to(xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, int argc, char_t** argv, char_t**env) {
+        int err = 0;
+        string_t& message = this->message_sent();
+        if (!(err = all_send_message_to(ep, cn, message, argc, argv, env))) {
+        } else {
+        }
+        return err;
+    }
+    virtual int before_send_to(xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, int argc, char_t** argv, char** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int after_send_to(xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, int argc, char_t** argv, char** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int all_send_to(xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, int argc, char_t** argv, char** env) {
+        int err = 0;
+        if (!(err = before_send_to(ep, cn, argc, argv, env))) {
+            int err2 = 0;
+            err = send_to(ep, cn, argc, argv, env);
+            if ((err2 = after_send_to(ep, cn, argc, argv, env))) {
+                if (!(err)) err = err2;
+            }
+        }
+        return err;
+    }
+
+    //////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
+
+    /// ...receive(int argc, ...)
+    virtual int receive(int argc, char_t** argv, char_t**env) {
+        int err = 0;
+        const xos::network::sockets::sockstring_t& host = this->accept_host();
+        const xos::network::sockets::sockport_t& port = this->accept_port();
+        xos::network::sockets::endpoint& ep = this->accept_ep();
+        xos::network::sockets::transport& tp = this->receive_tp();
+        xos::network::sockets::interface &ac = this->accept_iface();
+
+        LOGGER_IS_LOGGED_INFO("ep.attach(host = \"" << host << "\", port = " << unsigned_to_string(port) << ")...");
+        if ((ep.attach(host, port))) {
+            LOGGER_IS_LOGGED_INFO("...ep.attach(host = \"" << host << "\", port = " << unsigned_to_string(port) << ")");
+
+            LOGGER_IS_LOGGED_INFO("ac.open(tp)...");
+            if ((ac.open(tp))) {
+                LOGGER_IS_LOGGED_INFO("...ac.open(tp)");
+                
+                LOGGER_IS_LOGGED_INFO("ac.bind(ep)...");
+                if ((ac.bind(ep))) {
+                    LOGGER_IS_LOGGED_INFO("...ac.bind(ep)");
+                    
+                    do {
+                        LOGGER_IS_LOGGED_INFO("!(err = all_receive_from(ep, ac, argc, argv, env))...");
+                        if (!(err = all_receive_from(ep, ac, argc, argv, env))) {
+                            LOGGER_IS_LOGGED_INFO("...!(err = all_receive_from(ep, ac, argc, argv, env))");
+                        } else {
+                            LOGGER_IS_LOGGED_INFO("...failed on !(" << err << " = all_receive_from(ep, ac, argc, argv, env))");
+                        }
+                    } while (!(this->accept_one() || this->accept_done() || this->accept_restart()));
+                }
+                LOGGER_IS_LOGGED_INFO("ac.close()...");
+                ac.close();
+            }
+            LOGGER_IS_LOGGED_INFO("ep.detach()...");
+            ep.detach();
+        }
+        return err;
+    }
+
+    /// ...receive_from(xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, ...)
+    virtual int receive_from(xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, int argc, char_t** argv, char_t**env) {
+        int err = 0;
+        string_t& message = this->message_received();
+        if (!(err = all_receive_message_from(ep, cn, message, argc, argv, env))) {
+        } else {
+        }
+        return err;
+    }
+    virtual int before_receive_from(xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, int argc, char_t** argv, char** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int after_receive_from(xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, int argc, char_t** argv, char** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int all_receive_from(xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, int argc, char_t** argv, char** env) {
+        int err = 0;
+        if (!(err = before_receive_from(ep, cn, argc, argv, env))) {
+            int err2 = 0;
+            err = receive_from(ep, cn, argc, argv, env);
+            if ((err2 = after_receive_from(ep, cn, argc, argv, env))) {
+                if (!(err)) err = err2;
+            }
+        }
+        return err;
+    }
+
+    //////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
+
     /// 
     /// ..send / ...recv / ...relay request
     /// ...
@@ -588,6 +724,115 @@ protected:
     //////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////
 
+    /// ...send_message_to
+    virtual int send_message_to(xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, string_t& message, int argc, char_t** argv, char_t** env) {
+        int err = 0;
+
+        if (!(err = all_prepare_message_send_to(message, ep, cn, argc, argv, env))) {
+            size_t length = 0;
+            const char_t* chars = 0;
+    
+            LOGGER_IS_LOGGED_INFO("(chars = message.has_chars(length))...");
+            if ((chars = message.has_chars(length))) {
+                ssize_t count = 0;
+                
+                LOGGER_IS_LOGGED_INFO("...(chars = message.has_chars(" << length << "))");
+                LOGGER_IS_LOGGED_INFO("(0 < (count = cn.sendto(chars, length, 0, ep)))...");
+                if (0 < (count = cn.sendto(chars, length, 0, ep))) {
+                    LOGGER_IS_LOGGED_INFO("...(0 < (" << count << " = cn.sendto(chars, length, 0, ep)))");
+                } else {
+                    LOGGER_IS_LOGGED_INFO("...failed (0 < (" << count << " = cn.sendto(chars, length, 0, ep)))");
+                }
+            }
+        }
+        return err;
+    }
+    virtual int before_send_message_to(xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, string_t& message, int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int after_send_message_to(xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, string_t& message, int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int all_send_message_to(xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, string_t& message, int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        if (!(err = before_send_message_to(ep, cn, message, argc, argv, env))) {
+            int err2 = 0;
+            err = send_message_to(ep, cn, message, argc, argv, env);
+            if ((err2 = after_send_message_to(ep, cn, message, argc, argv, env))) {
+                if (!(err)) err = err2;
+            }
+        }
+        return err;
+    }
+
+    /// ...receive_message_from
+    virtual int receive_message_from(xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, string_t& message, int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        size_t size = 0;
+        char_t* chars = 0;
+        
+        LOGGER_IS_LOGGED_INFO("(chars = &this->message_chars(size))...");
+        if ((chars = &this->message_chars(size))) {
+            ssize_t count = 0;
+
+            LOGGER_IS_LOGGED_INFO("...(chars = &this->message_chars(" << size << "))");
+            LOGGER_IS_LOGGED_INFO("message.clear()...");
+            message.clear();
+
+            LOGGER_IS_LOGGED_INFO("(0 < (count = cn.recvfrom(chars, " << size << ", 0, ep)))...");
+            if (0 < (count = cn.recvfrom(chars, size, 0, ep))) {
+                LOGGER_IS_LOGGED_INFO("...(0 < (" << count << " = cn.recvfrom(chars, " << size << ", 0, ep)))");
+                LOGGER_IS_LOGGED_INFO("message.append(chars, " << count << ")...");
+                message.append(chars, count);
+                
+                LOGGER_IS_LOGGED_INFO("!(err = all_prepare_message_receive_from(message, ep, cn, argc, argv, env))...");
+                if (!(err = all_prepare_message_receive_from(message, ep, cn, argc, argv, env))) {
+                    LOGGER_IS_LOGGED_INFO("...!(" << err << " = all_prepare_message_receive_from(message, ep, cn, argc, argv, env))");
+
+                    LOGGER_IS_LOGGED_INFO("!(err = all_process_message_receive_from(message, ep, cn, argc, argv, env))...");
+                    if (!(err = all_process_message_receive_from(message, ep, cn, argc, argv, env))) {
+                        LOGGER_IS_LOGGED_INFO("...!(" << err << " = all_process_message_receive_from(message, ep, cn, argc, argv, env))");
+                    } else {
+                        LOGGER_IS_LOGGED_INFO("...failed !(" << err << " = all_process_message_receive_from(message, ep, cn, argc, argv, env))");
+                    }
+                } else {
+                    LOGGER_IS_LOGGED_INFO("...failed !(" << err << " = all_prepare_message_receive_from(message, ep, cn, argc, argv, env))");
+                }
+            } else {
+                if (0 > count) {
+                    LOGGER_IS_LOGGED_INFO("...failed on (0 < (" << count << " = cn.recvfrom(chars, size, 0, ep)))");
+                }
+            }
+        } else {
+            LOGGER_IS_LOGGED_INFO("...failed on (chars = &this->message_chars(size))");
+        }
+        return err;
+    }
+    virtual int before_receive_message_from(xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, string_t& message, int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int after_receive_message_from(xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, string_t& message, int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int all_receive_message_from(xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, string_t& message, int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        if (!(err = before_receive_message_from(ep, cn, message, argc, argv, env))) {
+            int err2 = 0;
+            err = receive_message_from(ep, cn, message, argc, argv, env);
+            if ((err2 = after_receive_message_from(ep, cn, message, argc, argv, env))) {
+                if (!(err)) err = err2;
+            }
+        }
+        return err;
+    }
+
+    //////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
+
     ///
     /// ...prepare_request
     /// ...
@@ -657,7 +902,7 @@ protected:
         const char_t* chars = 0;
 
         if ((chars = request.has_chars(length))) {
-            this->out(chars, length);
+            this->outln(chars, length);
         }
         return err;
     }
@@ -693,7 +938,7 @@ protected:
         const char_t* chars = 0;
 
         if ((chars = response.has_chars(length))) {
-            this->out(chars, length);
+            this->outln(chars, length);
         }
         return err;
     }
@@ -718,6 +963,105 @@ protected:
     }
     /// ...
     /// ...process_response
+    /// 
+
+    //////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
+
+    ///
+    /// ...prepare_message_send_to
+    /// ...
+    virtual int prepare_message_send_to(string_t& message, xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int before_prepare_message_send_to(string_t& message, xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int after_prepare_message_send_to(string_t& message, xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int all_prepare_message_send_to(string_t& message, xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        if (!(err = before_prepare_message_send_to(message, ep, cn, argc, argv, env))) {
+            int err2 = 0;
+            err = prepare_message_send_to(message, ep, cn, argc, argv, env);
+            if ((err2 = after_prepare_message_send_to(message, ep, cn, argc, argv, env))) {
+                if (!(err)) err = err2;
+            }
+        }
+        return err;
+    }
+    /// ...
+    /// ...prepare_message_sent
+    /// 
+
+    ///
+    /// ...prepare_message_receive_from
+    /// ...
+    virtual int prepare_message_receive_from(string_t& message, xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int before_prepare_message_receive_from(string_t& message, xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int after_prepare_message_receive_from(string_t& message, xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int all_prepare_message_receive_from(string_t& message, xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        if (!(err = before_prepare_message_receive_from(message, ep, cn, argc, argv, env))) {
+            int err2 = 0;
+            err = prepare_message_receive_from(message, ep, cn, argc, argv, env);
+            if ((err2 = after_prepare_message_receive_from(message, ep, cn, argc, argv, env))) {
+                if (!(err)) err = err2;
+            }
+        }
+        return err;
+    }
+    /// ...
+    /// ...prepare_message_sent
+    /// 
+
+    ///
+    /// ...process_message_receive_from
+    /// ...
+    virtual int process_message_receive_from(string_t& message, xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        size_t length = 0;
+        const char_t* chars = 0;
+
+        if ((chars = message.has_chars(length))) {
+            this->outln(chars, length);
+        }
+        return err;
+    }
+    virtual int before_process_message_receive_from(string_t& message, xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int after_process_message_receive_from(string_t& message, xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int all_process_message_receive_from(string_t& message, xos::network::sockets::endpoint& ep, xos::network::sockets::interface& cn, int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        if (!(err = before_process_message_receive_from(message, ep, cn, argc, argv, env))) {
+            int err2 = 0;
+            err = process_message_receive_from(message, ep, cn, argc, argv, env);
+            if ((err2 = after_process_message_receive_from(message, ep, cn, argc, argv, env))) {
+                if (!(err)) err = err2;
+            }
+        }
+        return err;
+    }
+    /// ...
+    /// ...process_message_receive_from
     /// 
 
     //////////////////////////////////////////////////////////////////////////
@@ -1129,6 +1473,48 @@ protected:
 #else /// !defined(WINSOCK_1)
 #endif /// !defined(WINSOCK_1)
 
+    /// ...tp
+    xos::network::sockets::transport& (derives::*send_tp_)() const;
+    virtual xos::network::sockets::transport& send_tp() const {
+        if ((this->send_tp_)) {
+            return (this->*send_tp_)();
+        }
+        return this->default_send_tp();
+    }
+    virtual xos::network::sockets::transport& default_send_tp() const {
+        return this->send_ip_v4_udp_tp();
+    }
+    virtual xos::network::sockets::transport& send_ip_v4_udp_tp() const {
+        return this->ip_v4_udp_tp();
+    }
+#if !defined(WINSOCK_1)
+    virtual xos::network::sockets::transport& send_ip_v6_udp_tp() const {
+        return this->ip_v6_udp_tp();
+    }
+#else /// !defined(WINSOCK_1)
+#endif /// !defined(WINSOCK_1)
+
+    /// ...tp
+    xos::network::sockets::transport& (derives::*receive_tp_)() const;
+    virtual xos::network::sockets::transport& receive_tp() const {
+        if ((this->receive_tp_)) {
+            return (this->*receive_tp_)();
+        }
+        return this->default_receive_tp();
+    }
+    virtual xos::network::sockets::transport& default_receive_tp() const {
+        return this->receive_ip_v4_udp_tp();
+    }
+    virtual xos::network::sockets::transport& receive_ip_v4_udp_tp() const {
+        return this->ip_v4_udp_tp();
+    }
+#if !defined(WINSOCK_1)
+    virtual xos::network::sockets::transport& receive_ip_v6_udp_tp() const {
+        return this->ip_v6_udp_tp();
+    }
+#else /// !defined(WINSOCK_1)
+#endif /// !defined(WINSOCK_1)
+
     //////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////
 
@@ -1231,6 +1617,16 @@ protected:
     //////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////
 
+    /// ...message_chars
+    virtual char_t& message_chars(size_t& size) const {
+        char_t& message_chars = (char_t&)(*message_chars_);
+        size = sizeof(message_chars_);
+        return message_chars;
+    }
+    
+    //////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
+
 protected:
     xos::network::sockets::os::interface accept_os_iface_, connect_os_iface_, relay_os_iface_;
  
@@ -1249,6 +1645,8 @@ protected:
     xos::network::sockets::ip::v6::udp::transport ip_v6_udp_tp_;
 #else /// !defined(WINSOCK_1)
 #endif /// !defined(WINSOCK_1)
+    
+    char_t message_chars_[4096];
 }; /// class maint 
 typedef maint<> main;
 
